@@ -34,7 +34,7 @@ fn main() {
                     .expect("Failed to execute the command");
 
 
-                writeln!(std::io::stdout(), "{}", from_utf8(&res.stdout[..]).unwrap()).expect("Failed to write to stdout");
+                write!(std::io::stdout(), "{}", from_utf8(&res.stdout[..]).unwrap()).expect("Failed to write to stdout");
             }
         }
     }
