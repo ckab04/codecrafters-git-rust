@@ -22,7 +22,7 @@ fn main() {
 
         for p in dir_content{
             let v = p.unwrap().path().to_str().unwrap();
-            let file = v.replace(&['/', '.'], v);
+            let file = v.replace(&['/', '.'], "");
             if args[2].is_empty() && args[2] == file{
                 println!("{file}");
                 break;
