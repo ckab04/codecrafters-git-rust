@@ -10,6 +10,7 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
         v.replace(&['/', '.'], "").to_string()
     }).collect();
 
+    println!("{:?}", val);
     let result = val.get(0).expect("Unable to get the path");
     if result == arg{
         return result.to_string();
