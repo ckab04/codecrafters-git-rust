@@ -9,7 +9,7 @@ use std::str::from_utf8;
 
 fn main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
-    println!("Logs from your program will appear here!");
+    //println!("Logs from your program will appear here!");
 
     // Uncomment this block to pass the first stage
     let args: Vec<String> = env::args().collect();
@@ -19,24 +19,24 @@ fn main() {
         fs::create_dir(".git/refs").unwrap();
         fs::write(".git/HEAD", "ref: refs/heads/master\n").unwrap();
         println!("Initialized git directory")
-    } else if args[1] == "cat-file"{
-       let dir_content = fs::read_dir(".git/objects").unwrap();
+    } else if args[1] == "cat-file" {
+        let dir_content = fs::read_dir(".git/objects").unwrap();
 
-        for p in dir_content{
+        for p in dir_content {
             let string = blob::read_blob(p.unwrap(), &args[3]);
-            if !string.is_empty(){
+            if !string.is_empty() {
                 let res = Command::new("git")
                     .arg("cat-file")
                     .arg("-p")
                     .arg(string)
                     .output()
-                    .expect("Failed to read from the stdout");
-            println!("{}", from_utf8(&res.stdout[..]).unwrap());
-                //println!("{}", string);
+                    .expect("Failed to execute the command");
+
+
+                writeln!(std::io::stdout(), "{}", from_utf8(&res.stdout[..]).unwrap()).expect("Failed to write to stdout");
             }
         }
     }
-
     else {
         println!("unknown command: {}", args[1])
     }
