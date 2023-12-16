@@ -18,7 +18,7 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
     let result = val.get(0);
     if result.is_some() && (result.unwrap() == arg)
     {
-        return result.to_string();
+        return result.unwrap().to_string();
     }
     String::new()
 
