@@ -14,8 +14,10 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
     }).collect();
 
     println!("Nothing ??? {:?}", val);
-    let result = val.get(0).unwrap();
-    if result == arg{
+
+    let result = val.get(0);
+    if result.is_some() && (result.unwrap() == arg)
+    {
         return result.to_string();
     }
     String::new()
