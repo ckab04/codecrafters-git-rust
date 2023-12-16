@@ -7,19 +7,16 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
 
     let content_folder = fs::read_dir(v).unwrap();
 
-    let val: Vec<String> = content_folder.into_iter().filter(|x | {
+    let val: Vec<String> = content_folder.into_iter().map(|x | {
         let v = x.unwrap().path().to_str().unwrap();
-        let value = content_obj.replace(&['/', '.'], "").to_string();
-        value == arg
-
-    }).map(|x| {
-        let v = x.unwrap().path().to_string();
+        v.replace(&['/', '.'], "").to_string();
     }).collect();
 
     if val.is_empty(){
         String::new()
     }
 
-    val.get(0).expect("Unable to get the path").into_string()
+    let result = val.get(0).expect("Unable to get the path").into_string();
+    result
 
    }
