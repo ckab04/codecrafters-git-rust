@@ -8,10 +8,11 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
     let val: Vec<String> = content_folder.into_iter().map(|x | {
         let v = x.unwrap().path().to_str().unwrap().to_string();
         let v = &v[..13];
+        println!("Is the slice working {v}");
         v.replace(&['/'], "").to_string()
     }).collect();
 
-    println!("{:?}", val);
+    println!("Nothing ??? {:?}", val);
     let result = val.get(0).unwrap();
     if result == arg{
         return result.to_string();
