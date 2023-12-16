@@ -3,7 +3,7 @@ use std::fs::DirEntry;
 
 // The return is the full file name (including the directory name)
 pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
-    let v = content_obj.unwrap().path().to_str().unwrap();
+    let v = content_obj.path().to_str().unwrap();
 
     let content_folder = fs::read_dir(v).unwrap();
 
@@ -13,7 +13,7 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
     }).collect();
 
     if val.is_empty(){
-        String::new()
+        return String::new();
     }
 
     let result = val.get(0).expect("Unable to get the path").into_string();
