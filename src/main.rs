@@ -31,7 +31,7 @@ fn main() {
                     .arg(string)
                     .output()
                     .expect("Failed to read from the stdout");
-            println!("{}", from_utf8(&res[..]).unwrap());
+            println!("{}", from_utf8(&res.stdout[..]).unwrap());
                 //println!("{}", string);
             }
         }
