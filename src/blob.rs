@@ -1,5 +1,8 @@
 use std::fs;
 use std::fs::DirEntry;
+use std::io::Write;
+use flate2::Compression;
+use flate2::read::ZlibEncoder;
 
 // The return is the full file name (including the directory name)
 pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
@@ -19,3 +22,11 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
     String::new()
 
    }
+
+pub fn create_blob_object(file_name: &str){
+    let content = fs::read_to_string(file_name).expect("Failed to read the file");
+    let mut comp = ZlibEncoder::new(Vec::new(), Compression::default());
+    comp.write_all(content.as_bytes()).expect("Failed to compress");
+    let compressed = comp.finish().unwrap();
+    println!("{:?}", compressed);
+}
