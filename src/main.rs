@@ -5,6 +5,7 @@ use std::env;
 #[allow(unused_imports)]
 use std::fs;
 use std::process::Command;
+use std::str::from_utf8;
 
 fn main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -24,14 +25,13 @@ fn main() {
         for p in dir_content{
             let string = blob::read_blob(p.unwrap(), &args[3]);
             if !string.is_empty(){
-                let mut command = Command::new("git")
+                let res = Command::new("git")
                     .arg("cat-file")
                     .arg("-p")
                     .arg(string)
-                    .spawn()
-                    .expect("Failed to read the command")
-                    .stdout.expect("Failed to read the command on the stdout");
-
+                    .output()
+                    .expect("Failed to read from the stdout");
+            println!("{}", from_utf8(&res[..]).unwrap());
                 //println!("{}", string);
             }
         }
