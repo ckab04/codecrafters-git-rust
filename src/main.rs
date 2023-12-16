@@ -17,11 +17,11 @@ fn main() {
         fs::create_dir(".git/refs").unwrap();
         fs::write(".git/HEAD", "ref: refs/heads/master\n").unwrap();
         println!("Initialized git directory")
-    } else if args[1] == "cat-file -p"{
+    } else if args[1] == "cat-file"{
        let dir_content = fs::read_dir(".git/objects").unwrap();
 
         for p in dir_content{
-            let string = blob::read_blob(p.unwrap(), &args[2]);
+            let string = blob::read_blob(p.unwrap(), &args[3]);
             if !string.is_empty(){
                 println!("{}", string);
             }
