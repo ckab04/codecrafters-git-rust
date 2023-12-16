@@ -8,7 +8,7 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
     let val: Vec<String> = content_folder.into_iter().map(|x | {
         let v = x.unwrap().path().to_str().unwrap().to_string();
         println!("Value in the slice {v}");
-        let v = &v[14..];
+        let v = &v[13..];
         println!("After slice  {v}");
         v.replace(&['/'], "").to_string()
     }).collect();
