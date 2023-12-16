@@ -21,11 +21,9 @@ fn main() {
        let dir_content = fs::read_dir(".git/objects").unwrap();
 
         for p in dir_content{
-            let v = p.unwrap().path().to_str().unwrap();
-            let file = v.replace(&['/', '.'], "");
-            if args[2].is_empty() && args[2] == file{
-                println!("{file}");
-                break;
+            let string = blob::read_blob(p.unwrap(), &args[2]);
+            if !string.is_empty(){
+                println!("{}", string);
             }
         }
     }
