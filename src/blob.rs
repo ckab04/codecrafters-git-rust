@@ -29,5 +29,6 @@ pub fn create_blob_object(file_name: &str){
     let mut hasher  = Sha1::new();
     hasher.update(file_name.as_bytes());
     let result = hasher.finalize();
-    println!("{:?}", result);
+    println!("First : {:?}", result);
+    println!("Second : {:?}", result[..]);
 }
