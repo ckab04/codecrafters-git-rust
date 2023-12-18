@@ -19,7 +19,7 @@ fn main() {
     match args[1].as_str() {
         "init" => init(),
         "cat-file" => cat_file(&args[3]),
-        "hash-object" => create_blob_object(&args[3]),
+        "hash-object" => hash_object(&args[3]),
         _ => println!("unknown command: {}", args[1])
     }
     // if args[1] == "init" {
@@ -55,4 +55,9 @@ fn cat_file(cmd_line_arg: &String){
             write!(std::io::stdout(), "{}", from_utf8(&res.stdout[..]).unwrap()).expect("Failed to write to stdout");
         }
     }
+}
+
+fn hash_object(file_name: &str){
+    let file_content = fs::read_to_string(file_name).expect("Failed to read the file");
+    create_blob_object(&file_content);
 }
