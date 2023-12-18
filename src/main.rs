@@ -59,6 +59,6 @@ fn cat_file(cmd_line_arg: &String){
 
 fn hash_object(file_name: &str){
     let file_content = fs::read_to_string(file_name).expect("Failed to read the file");
-    println!("File content : {file_content}");
+    //println!("File content : {file_content}");
     create_blob_object(&file_content);
 }

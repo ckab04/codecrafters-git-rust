@@ -22,9 +22,11 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
 
    }
 
-pub fn create_blob_object(file_name: &str){
+pub fn create_blob_object(file_content: &str){
+    print!("File content : {file_content}");
+    println!();
     let mut hasher  = Sha1::new();
-    hasher.update(file_name.as_bytes());
+    hasher.update(file_content.as_bytes());
     let result = hasher.finalize();
     let encoded_result = hex::encode(result);
     let folder_name = &encoded_result[0..2];
