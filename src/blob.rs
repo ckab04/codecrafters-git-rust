@@ -24,7 +24,6 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
    }
 
 pub fn create_blob_object(file_name: &str){
-    println!("test again");
     let content = fs::read_to_string(file_name).expect("Failed to read the file");
     let mut comp = ZlibEncoder::new(Vec::new(), Compression::default());
     comp.write_all(content.as_bytes()).expect("Failed to compress");
