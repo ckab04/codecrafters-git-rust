@@ -26,8 +26,11 @@ pub fn create_blob_object(file_name: &str){
     let mut hasher  = Sha1::new();
     hasher.update(file_name.as_bytes());
     let result = hasher.finalize();
-    let a = hex::encode(result);
-    println!("Encoded result : {a}");
-    println!("First : {:?}", from_utf8(&result[..]));
+    let encoded_result = hex::encode(result);
+    let folder_name = &encoded_result[0..2];
+    let file_name = &encoded_result[2..];
+    let folder_to_create = format!("{}/{}", ".git/objects/", folder_name);
+    //fs::create_dir(folder_to_create).unwrap();
+    println!("{a}");
     //println!("Second : {:?}", result[..]);
 }
