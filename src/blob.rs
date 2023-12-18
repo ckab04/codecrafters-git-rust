@@ -31,6 +31,6 @@ pub fn create_blob_object(file_name: &str){
     let file_name = &encoded_result[2..];
     let folder_to_create = format!("{}/{}", ".git/objects/", folder_name);
     //fs::create_dir(folder_to_create).unwrap();
-    println!("{encoded_result}");
+    print!("{encoded_result}");
     //println!("Second : {:?}", result[..]);
 }
