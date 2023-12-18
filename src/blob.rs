@@ -1,9 +1,5 @@
 use std::fs;
 use std::fs::DirEntry;
-use std::io::Write;
-use flate2::Compression;
-use flate2::read::ZlibEncoder;
-use sha1::digest::Update;
 use sha1::{Digest, Sha1};
 
 // The return is the full file name (including the directory name)
@@ -30,5 +26,5 @@ pub fn create_blob_object(file_name: &str){
     hasher.update(file_name.as_bytes());
     let result = hasher.finalize();
     println!("First : {:?}", result);
-    println!("Second : {:?}", result[..]);
+    //println!("Second : {:?}", result[..]);
 }
