@@ -1,5 +1,6 @@
 use std::fs;
 use std::fs::DirEntry;
+use std::str::from_utf8;
 use sha1::{Digest, Sha1};
 
 // The return is the full file name (including the directory name)
@@ -25,6 +26,8 @@ pub fn create_blob_object(file_name: &str){
     let mut hasher  = Sha1::new();
     hasher.update(file_name.as_bytes());
     let result = hasher.finalize();
-    println!("First : {:?}", result);
+    let a = hex::encode(result);
+    println!("Encoded result : {a}");
+    println!("First : {:?}", from_utf8(&result[..]));
     //println!("Second : {:?}", result[..]);
 }
