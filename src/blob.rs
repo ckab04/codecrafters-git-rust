@@ -1,5 +1,5 @@
 use std::fs;
-use std::fs::DirEntry;
+use std::fs::{DirEntry, File};
 use std::str::from_utf8;
 use sha1::{Digest, Sha1};
 
@@ -23,8 +23,8 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
    }
 
 pub fn create_blob_object(file_content: &str){
-    print!("File content : {file_content}");
-    println!();
+    //print!("File content : {file_content}");
+    //println!();
     let mut hasher  = Sha1::new();
     hasher.update(file_content.as_bytes());
     let result = hasher.finalize();
@@ -32,7 +32,11 @@ pub fn create_blob_object(file_content: &str){
     let folder_name = &encoded_result[0..2];
     let file_name = &encoded_result[2..];
     let folder_to_create = format!("{}/{}", ".git/objects/", folder_name);
-    //fs::create_dir(folder_to_create).unwrap();
+    if fs::create_dir(folder_to_create).is_ok(){
+        let file_to_create = format!("{}/{}", folder_to_create, file_name);
+        let _ = File::create(file_to_create).expect("Unable to create a file");
+    }
+
     print!("{encoded_result}");
     //println!("Second : {:?}", result[..]);
 }
