@@ -2,7 +2,6 @@ use std::fs;
 use std::fs::{DirEntry, File};
 use std::io::Write;
 use sha1::{Digest, Sha1};
-use crate::cat_file;
 
 // The return is the full file name (including the directory name)
 pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
