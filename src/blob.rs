@@ -24,10 +24,11 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
    }
 
 pub fn create_blob_object(file_content: &str){
-    print!("File content : {file_content}");
+    //print!("File content : {file_content}");
     //println!();
+    let file_c = file_content.as_bytes();
      let header_b = format!("blob {}\0", file_content.len()).into_bytes();
-    let content = [&header_b[..], &file_content[..]].concat();
+    let content = [&header_b[..], file_c].concat();
     let mut compressed = Vec::new();
     let mut compressor = flate2::write::ZlibEncoder::new(&mut compressed, flate2::Compression::fast());
     compressor.write_all(&content).unwrap();
