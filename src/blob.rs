@@ -1,5 +1,6 @@
 use std::fs;
 use std::fs::{DirEntry, File};
+use std::io::Write;
 use sha1::{Digest, Sha1};
 use crate::cat_file;
 
@@ -25,8 +26,15 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
 pub fn create_blob_object(file_content: &str){
     print!("File content : {file_content}");
     //println!();
+     let header_b = format!("blob {}\0", file_content.len()).into_bytes();
+    let content = [&header_b[..], &file_content[..]].concat();
+    let mut compressed = Vec::new();
+    let mut compressor = flate2::write::ZlibEncoder::new(&mut compressed, flate2::Compression::fast());
+    compressor.write_all(&content).unwrap();
+    compressor.finish().unwrap();
     let mut hasher  = Sha1::new();
-    hasher.update(file_content.as_bytes());
+    //hasher.update(file_content.as_bytes());
+    hasher.update(&content);
     let result = hasher.finalize();
     let encoded_result = hex::encode(result);
     let encoded_format = format!("{:02x}", result);
