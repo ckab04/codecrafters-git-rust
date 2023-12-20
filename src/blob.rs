@@ -37,7 +37,7 @@ pub fn create_blob_object(file_content: &str){
         let _ = File::create(file_to_create).expect("Unable to create a file");
     }
 
-    eprintln!("Test : {:?}", cat_file(&encoded_result));
+    cat_file(&encoded_result);
     print!("{encoded_result}");
     //println!("Second : {:?}", result[..]);
 }
