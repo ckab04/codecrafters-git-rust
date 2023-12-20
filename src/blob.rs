@@ -29,6 +29,7 @@ pub fn create_blob_object(file_content: &str){
     hasher.update(file_content.as_bytes());
     let result = hasher.finalize();
     let encoded_result = hex::encode(result);
+    let encoded_format = format!("{:02x}", result);
     let folder_name = &encoded_result[0..2];
     let file_name = &encoded_result[2..];
     let folder_to_create = format!("{}/{}", ".git/objects/", folder_name);
@@ -39,5 +40,6 @@ pub fn create_blob_object(file_content: &str){
 
     cat_file(&encoded_result);
     print!("{encoded_result}");
+    println!("Encoded format : {encoded_format}");
     //println!("Second : {:?}", result[..]);
 }
