@@ -26,7 +26,8 @@ pub fn create_blob_object(file_content: Vec<u8>){
     //print!("File content : {file_content}");
     //println!();
     //let file_c = file_content.as_bytes();
-     let header_b = format!("blob {}\0", file_content.len()).into_bytes();
+     let mut header_b = format!("blob {}", file_content.len()).into_bytes();
+    header_b.push(b'\0');
     let content = [&header_b[..], &file_content[..]].concat();
     let mut compressed = Vec::new();
     let mut compressor = flate2::write::ZlibEncoder::new(&mut compressed, flate2::Compression::fast());
