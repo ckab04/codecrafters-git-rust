@@ -1,6 +1,5 @@
 use std::fs;
 use std::fs::{DirEntry, File};
-use std::str::from_utf8;
 use sha1::{Digest, Sha1};
 
 // The return is the full file name (including the directory name)
@@ -32,7 +31,7 @@ pub fn create_blob_object(file_content: &str){
     let folder_name = &encoded_result[0..2];
     let file_name = &encoded_result[2..];
     let folder_to_create = format!("{}/{}", ".git/objects/", folder_name);
-    if fs::create_dir(folder_to_create).is_ok(){
+    if fs::create_dir(&folder_to_create).is_ok(){
         let file_to_create = format!("{}/{}", folder_to_create, file_name);
         let _ = File::create(file_to_create).expect("Unable to create a file");
     }
