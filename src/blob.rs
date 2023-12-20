@@ -23,12 +23,12 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
 
    }
 
-pub fn create_blob_object(file_content: &str){
+pub fn create_blob_object(file_content: Vec<u8>){
     //print!("File content : {file_content}");
     //println!();
-    let file_c = file_content.as_bytes();
+    //let file_c = file_content.as_bytes();
      let header_b = format!("blob {}\0", file_content.len()).into_bytes();
-    let content = [&header_b[..], file_c].concat();
+    let content = [&header_b[..], &file_content[..]].concat();
     let mut compressed = Vec::new();
     let mut compressor = flate2::write::ZlibEncoder::new(&mut compressed, flate2::Compression::fast());
     compressor.write_all(&content).unwrap();
@@ -38,7 +38,7 @@ pub fn create_blob_object(file_content: &str){
     hasher.update(&content);
     let result = hasher.finalize();
     let encoded_result = hex::encode(result);
-    let encoded_format = format!("{:02x}", result);
+    //let encoded_format = format!("{:02x}", result);
     let folder_name = &encoded_result[0..2];
     let file_name = &encoded_result[2..];
     let folder_to_create = format!("{}/{}", ".git/objects/", folder_name);
