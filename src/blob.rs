@@ -23,7 +23,7 @@ pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
    }
 
 pub fn create_blob_object(file_content: &str){
-    //print!("File content : {file_content}");
+    print!("File content : {file_content}");
     //println!();
     let mut hasher  = Sha1::new();
     hasher.update(file_content.as_bytes());
