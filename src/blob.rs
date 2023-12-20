@@ -1,6 +1,7 @@
 use std::fs;
 use std::fs::{DirEntry, File};
 use sha1::{Digest, Sha1};
+use crate::cat_file;
 
 // The return is the full file name (including the directory name)
 pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
@@ -36,6 +37,7 @@ pub fn create_blob_object(file_content: &str){
         let _ = File::create(file_to_create).expect("Unable to create a file");
     }
 
+    eprintln!("Test : {:?}", cat_file(&encoded_result));
     print!("{encoded_result}");
     //println!("Second : {:?}", result[..]);
 }
