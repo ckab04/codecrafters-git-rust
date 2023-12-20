@@ -61,5 +61,5 @@ fn hash_object(file_name: &str){
     let file_content = fs::read(file_name).expect("Failed to read the file");
 
     //println!("File content : {file_content}");
-    create_blob_object(&file_content);
+    create_blob_object(file_content);
 }
