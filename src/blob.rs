@@ -29,13 +29,15 @@ pub fn create_blob_object(file_content: Vec<u8>){
     //let file_c = file_content.as_bytes();
      let  header = format!("blob {}", file_content.len()).into_bytes();
     //header.push(b'\0');
-    //let content = file_content;
-    let content = [&header[..], &file_content[..]].concat();
+    let content = file_content;
+    //let content = [&header[..], &file_content[..]].concat();
     let mut hasher  = Sha1::new();
     //hasher.update(&content.as_slice());
-    Digest::update(&mut hasher, &content.as_slice());
+    //Digest::update(&mut hasher, &content.as_slice());
     //hasher.update(header.as_slice());
     //hasher.update(content.as_slice());
+    Digest::update(&mut hasher, &header.as_slice());
+    Digest::update(&mut hasher, &content.as_slice());
 
     //let content = hasher.;
     let result = hasher.finalize();
