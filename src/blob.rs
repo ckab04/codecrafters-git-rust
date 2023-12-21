@@ -36,7 +36,7 @@ pub fn create_blob_object(file_content: Vec<u8>){
     hasher.update(&header);
     hasher.update(&content);
 
-    let content = hasher.digest().to_string();
+    //let content = hasher.;
     let result = hasher.finalize();
     let encoded_result = hex::encode(result);
     let mut compressed = Vec::new();
