@@ -30,9 +30,9 @@ pub fn create_blob_object(file_content: Vec<u8>){
     header.push(b'\0');
     let content = [&header[..], &file_content[..]].concat();
     let mut compressed = Vec::new();
-    let mut compressor = flate2::write::ZlibEncoder::new(&mut compressed, flate2::Compression::fast());
-    compressor.write_all(&content).unwrap();
-    compressor.finish().unwrap();
+    let mut compressor = flate2::write::ZlibEncoder::new(&mut compressed, flate2::Compression::default());
+    compressor.write_all(&content).expect("Failed to write compressed content");
+    compressor.finish().expect("Compression has not finished properly");
     let mut hasher  = Sha1::new();
     //hasher.update(file_content.as_bytes());
     hasher.update(&content);
