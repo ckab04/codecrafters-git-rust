@@ -32,7 +32,8 @@ pub fn create_blob_object(file_content: Vec<u8>){
     //let content = file_content;
     let content = [&header[..], &file_content[..]].concat();
     let mut hasher  = Sha1::new();
-    hasher.update(&content.as_slice());
+    //hasher.update(&content.as_slice());
+    Digest::update(&mut hasher, &content.as_slice());
     //hasher.update(header.as_slice());
     //hasher.update(content.as_slice());
 
