@@ -2,6 +2,7 @@ use std::fs;
 use std::fs::{DirEntry, File};
 use std::io::Write;
 use sha1::{Digest, Sha1};
+use sha1::digest::Update;
 
 // The return is the full file name (including the directory name)
 pub fn read_blob(content_obj: DirEntry, arg: &String) -> String{
@@ -26,18 +27,24 @@ pub fn create_blob_object(file_content: Vec<u8>){
     //print!("File content : {file_content}");
     //println!();
     //let file_c = file_content.as_bytes();
-     let mut header = format!("blob {}", file_content.len()).into_bytes();
+     let  header = format!("blob {}", file_content.len()).into_bytes();
     //header.push(b'\0');
-    let content = [&header[..], &file_content[..]].concat();
-    let mut compressed = Vec::new();
-    let mut compressor = flate2::write::ZlibEncoder::new(&mut compressed, flate2::Compression::default());
-    compressor.write_all(&content).expect("Failed to write compressed content");
-    compressor.finish().expect("Compression has not finished properly");
+    let content = file_content;
+    //let content = [&header[..], &file_content[..]].concat();
     let mut hasher  = Sha1::new();
     //hasher.update(file_content.as_bytes());
+    hasher.update(&header);
     hasher.update(&content);
+
+    let content = hasher.digest().to_string();
     let result = hasher.finalize();
     let encoded_result = hex::encode(result);
+    let mut compressed = Vec::new();
+    let mut compressor = flate2::write::ZlibEncoder::new(&mut compressed, flate2::Compression::default());
+    compressor.write_all(&header).expect("Failed to write compressed content");
+    compressor.write_all(&content).expect("Failed to write compressed content");
+
+    compressor.finish().expect("Compression has not finished properly");
     let folder_name = &encoded_result[0..2];
     let file_name = &encoded_result[2..];
     let folder_to_create = format!("{}/{}", ".git/objects/", folder_name);
